@@ -33,9 +33,13 @@ SpeedReader/
 
 ## Core Concepts
 
-- **RSVP display**: One word shown at a time in a fixed center position. No eye movement needed.
-- **WPM timing**: Interval between words = `60000 / wpm` ms.
-- **State machine**: idle → running → paused → idle. Managed via `running` flag and `intervalId`.
+- **RSVP display**: One word shown at a time in fixed center position. No eye movement needed.
+- **ORP (Optimal Recognition Point)**: One letter per word highlighted as the visual focal point. Spritz-style algorithm picks letter index by word length: 1ch→0, 2-5ch→1, 6-9ch→2, 10-13ch→3, 14+→4.
+- **WPM timing**: Base interval = `60000 / wpm` ms. Punctuation extends: 1.5× for `,;:`, 2× for `.!?`.
+- **Reader mode**: Fullscreen takeover. Body gets `.reader-mode` class. Hides input/header/drawer. ESC or Exit button leaves mode. Spacebar pauses/resumes.
+- **Themes**: CSS custom properties on `:root`. Theme classes on `<body>` (`.theme-amber`, `.theme-cyan`) override `--orp` and `--guide`.
+- **Fonts**: `--font-reader` CSS var. Font classes on `<body>` (`.font-sans`, `.font-mono`) switch reader font family.
+- **Persistence**: WPM, theme, font saved to `localStorage` under key `speedreader-settings`. Restored on load.
 
 ## Key Variables (script.js)
 
@@ -43,8 +47,9 @@ SpeedReader/
 |----------|---------|
 | `words` | Array of words split from input text |
 | `index` | Current position in `words` |
-| `intervalId` | Reference to `setInterval` — cleared on pause/stop |
+| `intervalId` | Reference to current `setTimeout` — cleared on pause/stop |
 | `running` | Boolean — true while actively displaying words |
+| `STORAGE_KEY` | localStorage key for settings persistence |
 
 ## Patterns & Conventions
 
@@ -60,3 +65,6 @@ None.
 
 - `textInput.disabled = true` during reading prevents editing mid-session
 - Resume reuses existing `words` array and `index` — does not re-parse text
+- ORP anchoring uses fixed-width left/right slots (`.word-before` / `.word-after` at 50% each, with `margin-left: -1ch` on after) so the ORP letter stays at horizontal center across word lengths. If you change slot widths, verify ORP stays anchored.
+- `setTimeout` chain (not `setInterval`) is required for variable per-word delay (punctuation pause).
+- Fullscreen mode is CSS-only (`.reader-mode` body class) — does not use the Fullscreen API. Browser chrome remains visible.
