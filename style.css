@@ -293,6 +293,16 @@ header {
   outline: none;
 }
 
+.setting input[type="range"] {
+  width: 100%;
+  accent-color: var(--orp);
+}
+
+.setting output {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
 body.reader-mode {
   padding: 0;
 }

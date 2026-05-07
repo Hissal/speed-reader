@@ -203,3 +203,27 @@ document.addEventListener('keydown', (e) => {
     togglePlay();
   }
 });
+
+const rangeGuideWidth = document.getElementById('range-guide-width');
+const rangeGuideLength = document.getElementById('range-guide-length');
+const rangeGuideOffset = document.getElementById('range-guide-offset');
+const outGuideWidth = document.getElementById('out-guide-width');
+const outGuideLength = document.getElementById('out-guide-length');
+const outGuideOffset = document.getElementById('out-guide-offset');
+
+function applyGuideWidth(v) {
+  document.documentElement.style.setProperty('--guide-width', `${v}px`);
+  outGuideWidth.textContent = v;
+}
+function applyGuideLength(v) {
+  document.documentElement.style.setProperty('--guide-length', `${v}px`);
+  outGuideLength.textContent = v;
+}
+function applyGuideOffset(v) {
+  document.documentElement.style.setProperty('--guide-offset', `${v}%`);
+  outGuideOffset.textContent = v;
+}
+
+rangeGuideWidth.addEventListener('input', (e) => applyGuideWidth(e.target.value));
+rangeGuideLength.addEventListener('input', (e) => applyGuideLength(e.target.value));
+rangeGuideOffset.addEventListener('input', (e) => applyGuideOffset(e.target.value));
