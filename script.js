@@ -151,6 +151,30 @@ function loadSettings() {
       selectFont.value = s.font;
       applyFont(s.font);
     }
+    if (s.guideWidth != null) {
+      rangeGuideWidth.value = s.guideWidth;
+      applyGuideWidth(s.guideWidth);
+    }
+    if (s.guideLength != null) {
+      rangeGuideLength.value = s.guideLength;
+      applyGuideLength(s.guideLength);
+    }
+    if (s.guideOffset != null) {
+      rangeGuideOffset.value = s.guideOffset;
+      applyGuideOffset(s.guideOffset);
+    }
+    if (s.pauseComma != null) {
+      rangePauseComma.value = s.pauseComma;
+      applyPauseComma(s.pauseComma);
+    }
+    if (s.pausePeriod != null) {
+      rangePausePeriod.value = s.pausePeriod;
+      applyPausePeriod(s.pausePeriod);
+    }
+    if (s.wordSize != null) {
+      rangeWordSize.value = s.wordSize;
+      applyWordSize(s.wordSize);
+    }
   } catch (e) {
     // ignore corrupt storage
   }
@@ -161,6 +185,12 @@ function saveSettings() {
     wpm: wpmInput.value,
     theme: selectTheme.value,
     font: selectFont.value,
+    guideWidth: rangeGuideWidth.value,
+    guideLength: rangeGuideLength.value,
+    guideOffset: rangeGuideOffset.value,
+    pauseComma: rangePauseComma.value,
+    pausePeriod: rangePausePeriod.value,
+    wordSize: rangeWordSize.value,
   };
   localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
 }
@@ -168,8 +198,6 @@ function saveSettings() {
 wpmInput.addEventListener('change', saveSettings);
 selectTheme.addEventListener('change', saveSettings);
 selectFont.addEventListener('change', saveSettings);
-
-loadSettings();
 
 const btnFullscreen = document.getElementById('btn-fullscreen');
 const btnReaderPlay = document.getElementById('btn-reader-play');
@@ -254,3 +282,12 @@ function applyWordSize(v) {
 }
 
 rangeWordSize.addEventListener('input', (e) => applyWordSize(e.target.value));
+
+rangeGuideWidth.addEventListener('change', saveSettings);
+rangeGuideLength.addEventListener('change', saveSettings);
+rangeGuideOffset.addEventListener('change', saveSettings);
+rangePauseComma.addEventListener('change', saveSettings);
+rangePausePeriod.addEventListener('change', saveSettings);
+rangeWordSize.addEventListener('change', saveSettings);
+
+loadSettings();
