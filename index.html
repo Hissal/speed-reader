@@ -10,6 +10,7 @@
   <div id="app">
     <header>
       <h1>SpeedReader</h1>
+      <button id="btn-settings" aria-label="Settings" title="Settings">⚙</button>
     </header>
 
     <section id="input-section">
@@ -32,6 +33,31 @@
         <span id="progress-text">0 / 0</span>
       </div>
     </section>
+
+    <aside id="settings-drawer" class="closed">
+      <div class="drawer-header">
+        <h2>Settings</h2>
+        <button id="btn-close-settings" aria-label="Close">×</button>
+      </div>
+      <div class="drawer-body">
+        <label class="setting">
+          <span>Theme</span>
+          <select id="select-theme">
+            <option value="default">Red (default)</option>
+            <option value="amber">Amber</option>
+            <option value="cyan">Cyan</option>
+          </select>
+        </label>
+        <label class="setting">
+          <span>Font</span>
+          <select id="select-font">
+            <option value="serif">Serif</option>
+            <option value="sans">Sans-serif</option>
+            <option value="mono">Monospace</option>
+          </select>
+        </label>
+      </div>
+    </aside>
   </div>
 
   <script src="script.js"></script>
