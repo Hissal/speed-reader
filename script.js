@@ -28,6 +28,8 @@ let words = [];
 let index = 0;
 let intervalId = null;
 let running = false;
+let commaMultiplier = 1.5;
+let periodMultiplier = 2.0;
 
 function getDelay() {
   const wpm = parseInt(wpmInput.value, 10) || 300;
@@ -35,14 +37,31 @@ function getDelay() {
   if (index === 0 || index > words.length) return base;
   const prev = words[index - 1];
   const lastChar = prev.charAt(prev.length - 1);
-  if (/[.!?]/.test(lastChar)) return Math.round(base * 2);
-  if (/[,;:]/.test(lastChar)) return Math.round(base * 1.5);
+  if (/[.!?]/.test(lastChar)) return Math.round(base * periodMultiplier);
+  if (/[,;:]/.test(lastChar)) return Math.round(base * commaMultiplier);
   return base;
+}
+
+function getPlayState() {
+  if (running) return 'pause';
+  if (words.length === 0 || index >= words.length) return 'start';
+  return 'resume';
+}
+
+function updatePlayButtons() {
+  const state = getPlayState();
+  const label = state === 'pause' ? 'Pause' : state === 'resume' ? 'Resume' : 'Start';
+  btnStart.textContent = label;
+  if (typeof btnReaderPlay !== 'undefined' && btnReaderPlay) btnReaderPlay.textContent = label;
 }
 
 function showWord() {
   if (index >= words.length) {
-    stop();
+    clearTimeout(intervalId);
+    intervalId = null;
+    running = false;
+    textInput.disabled = false;
+    updatePlayButtons();
     return;
   }
   renderWord(words[index]);
@@ -52,47 +71,43 @@ function showWord() {
 }
 
 function start() {
-  const raw = textInput.value.trim();
-  if (!raw) return;
+  const state = getPlayState();
+  if (state === 'pause') return;
 
-  btnReaderPause.textContent = 'Pause';
-
-  if (words.length === 0) {
+  if (state === 'start') {
+    const raw = textInput.value.trim();
+    if (!raw) return;
     words = raw.split(/\s+/);
     index = 0;
   }
 
   running = true;
-  btnStart.disabled = true;
   textInput.disabled = true;
-
   showWord();
-  enterReaderMode();
+  updatePlayButtons();
 }
 
 function pause() {
   clearTimeout(intervalId);
   intervalId = null;
   running = false;
-  btnStart.textContent = 'Resume';
-  btnReaderPause.textContent = 'Resume';
-  btnStart.disabled = false;
+  updatePlayButtons();
 }
 
-function stop() {
-  clearTimeout(intervalId);
-  intervalId = null;
-  running = false;
-  words = [];
-  index = 0;
-  wordEl.textContent = '';
-  progressEl.textContent = '0 / 0';
-  btnStart.textContent = 'Start';
-  btnStart.disabled = false;
-  textInput.disabled = false;
+function togglePlay() {
+  if (running) pause();
+  else start();
 }
 
-btnStart.addEventListener('click', start);
+btnStart.addEventListener('click', togglePlay);
+
+textInput.addEventListener('input', () => {
+  if (!running && words.length > 0) {
+    words = [];
+    index = 0;
+    updatePlayButtons();
+  }
+});
 
 const btnSettings = document.getElementById('btn-settings');
 const btnCloseSettings = document.getElementById('btn-close-settings');
