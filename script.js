@@ -1,8 +1,6 @@
 const textInput = document.getElementById('text-input');
 const wpmInput = document.getElementById('wpm-input');
 const btnStart = document.getElementById('btn-start');
-const btnPause = document.getElementById('btn-pause');
-const btnStop = document.getElementById('btn-stop');
 const wordEl = document.getElementById('word');
 const progressEl = document.getElementById('progress-text');
 
@@ -66,8 +64,6 @@ function start() {
 
   running = true;
   btnStart.disabled = true;
-  btnPause.disabled = false;
-  btnStop.disabled = false;
   textInput.disabled = true;
 
   showWord();
@@ -81,7 +77,6 @@ function pause() {
   btnStart.textContent = 'Resume';
   btnReaderPause.textContent = 'Resume';
   btnStart.disabled = false;
-  btnPause.disabled = true;
 }
 
 function stop() {
@@ -94,14 +89,10 @@ function stop() {
   progressEl.textContent = '0 / 0';
   btnStart.textContent = 'Start';
   btnStart.disabled = false;
-  btnPause.disabled = true;
-  btnStop.disabled = true;
   textInput.disabled = false;
 }
 
 btnStart.addEventListener('click', start);
-btnPause.addEventListener('click', pause);
-btnStop.addEventListener('click', stop);
 
 const btnSettings = document.getElementById('btn-settings');
 const btnCloseSettings = document.getElementById('btn-close-settings');
