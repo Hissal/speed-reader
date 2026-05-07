@@ -176,31 +176,26 @@ button:disabled {
   font-weight: 400;
   letter-spacing: 0.02em;
   user-select: none;
-  display: block;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
   width: 100%;
-  text-align: center;
 }
 
 .word-before {
-  display: inline-block;
   text-align: right;
-  width: 50%;
-  padding-right: 0;
+  white-space: nowrap;
   color: var(--text);
 }
 
 .word-orp {
-  display: inline-block;
   color: var(--orp);
-  text-align: center;
+  white-space: nowrap;
 }
 
 .word-after {
-  display: inline-block;
   text-align: left;
-  width: 50%;
-  padding-left: 0;
-  margin-left: -1ch;
+  white-space: nowrap;
   color: var(--text);
 }
 

@@ -57,7 +57,7 @@ function start() {
 
   btnReaderPause.textContent = 'Pause';
 
-  if (!running) {
+  if (words.length === 0) {
     words = raw.split(/\s+/);
     index = 0;
   }
@@ -167,7 +167,10 @@ function exitReaderMode() {
   document.body.classList.remove('reader-mode');
 }
 
-btnReaderPause.addEventListener('click', pause);
+btnReaderPause.addEventListener('click', () => {
+  if (running) pause();
+  else start();
+});
 btnReaderExit.addEventListener('click', () => {
   stop();
   exitReaderMode();
