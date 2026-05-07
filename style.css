@@ -348,3 +348,10 @@ body.reader-mode #progress {
 body.reader-mode #reader-controls {
   display: flex;
 }
+
+#btn-fullscreen,
+#btn-reader-fullscreen {
+  font-size: 1.1rem;
+  padding: 0.4rem 0.7rem;
+  line-height: 1;
+}

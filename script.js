@@ -171,8 +171,9 @@ selectFont.addEventListener('change', saveSettings);
 
 loadSettings();
 
-const btnReaderPause = document.getElementById('btn-reader-pause');
-const btnReaderExit = document.getElementById('btn-reader-exit');
+const btnFullscreen = document.getElementById('btn-fullscreen');
+const btnReaderPlay = document.getElementById('btn-reader-play');
+const btnReaderFullscreen = document.getElementById('btn-reader-fullscreen');
 
 function enterReaderMode() {
   document.body.classList.add('reader-mode');
@@ -182,23 +183,23 @@ function exitReaderMode() {
   document.body.classList.remove('reader-mode');
 }
 
-btnReaderPause.addEventListener('click', () => {
-  if (running) pause();
-  else start();
-});
-btnReaderExit.addEventListener('click', () => {
-  stop();
-  exitReaderMode();
-});
+function toggleReaderMode() {
+  if (document.body.classList.contains('reader-mode')) exitReaderMode();
+  else enterReaderMode();
+}
+
+btnFullscreen.addEventListener('click', toggleReaderMode);
+btnReaderFullscreen.addEventListener('click', exitReaderMode);
+btnReaderPlay.addEventListener('click', togglePlay);
+
+updatePlayButtons();
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && document.body.classList.contains('reader-mode')) {
-    stop();
     exitReaderMode();
   }
   if (e.key === ' ' && document.body.classList.contains('reader-mode')) {
     e.preventDefault();
-    if (running) pause();
-    else start();
+    togglePlay();
   }
 });
