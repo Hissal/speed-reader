@@ -124,3 +124,39 @@ btnSettings.addEventListener('click', openDrawer);
 btnCloseSettings.addEventListener('click', closeDrawer);
 selectTheme.addEventListener('change', (e) => applyTheme(e.target.value));
 selectFont.addEventListener('change', (e) => applyFont(e.target.value));
+
+const STORAGE_KEY = 'speedreader-settings';
+
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const s = JSON.parse(raw);
+    if (s.wpm) wpmInput.value = s.wpm;
+    if (s.theme) {
+      selectTheme.value = s.theme;
+      applyTheme(s.theme);
+    }
+    if (s.font) {
+      selectFont.value = s.font;
+      applyFont(s.font);
+    }
+  } catch (e) {
+    // ignore corrupt storage
+  }
+}
+
+function saveSettings() {
+  const s = {
+    wpm: wpmInput.value,
+    theme: selectTheme.value,
+    font: selectFont.value,
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+}
+
+wpmInput.addEventListener('change', saveSettings);
+selectTheme.addEventListener('change', saveSettings);
+selectFont.addEventListener('change', saveSettings);
+
+loadSettings();
