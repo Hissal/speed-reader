@@ -98,3 +98,29 @@ function stop() {
 btnStart.addEventListener('click', start);
 btnPause.addEventListener('click', pause);
 btnStop.addEventListener('click', stop);
+
+const btnSettings = document.getElementById('btn-settings');
+const btnCloseSettings = document.getElementById('btn-close-settings');
+const drawer = document.getElementById('settings-drawer');
+const selectTheme = document.getElementById('select-theme');
+const selectFont = document.getElementById('select-font');
+
+function openDrawer() { drawer.classList.remove('closed'); }
+function closeDrawer() { drawer.classList.add('closed'); }
+
+function applyTheme(theme) {
+  document.body.classList.remove('theme-amber', 'theme-cyan');
+  if (theme === 'amber') document.body.classList.add('theme-amber');
+  else if (theme === 'cyan') document.body.classList.add('theme-cyan');
+}
+
+function applyFont(font) {
+  document.body.classList.remove('font-sans', 'font-mono');
+  if (font === 'sans') document.body.classList.add('font-sans');
+  else if (font === 'mono') document.body.classList.add('font-mono');
+}
+
+btnSettings.addEventListener('click', openDrawer);
+btnCloseSettings.addEventListener('click', closeDrawer);
+selectTheme.addEventListener('change', (e) => applyTheme(e.target.value));
+selectFont.addEventListener('change', (e) => applyFont(e.target.value));
