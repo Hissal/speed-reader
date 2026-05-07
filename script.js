@@ -33,7 +33,13 @@ let running = false;
 
 function getDelay() {
   const wpm = parseInt(wpmInput.value, 10) || 300;
-  return Math.round(60000 / wpm);
+  const base = Math.round(60000 / wpm);
+  if (index === 0 || index > words.length) return base;
+  const prev = words[index - 1];
+  const lastChar = prev.charAt(prev.length - 1);
+  if (/[.!?]/.test(lastChar)) return Math.round(base * 2);
+  if (/[,;:]/.test(lastChar)) return Math.round(base * 1.5);
+  return base;
 }
 
 function showWord() {
@@ -44,6 +50,7 @@ function showWord() {
   renderWord(words[index]);
   progressEl.textContent = `${index + 1} / ${words.length}`;
   index++;
+  intervalId = setTimeout(showWord, getDelay());
 }
 
 function start() {
@@ -62,11 +69,10 @@ function start() {
   textInput.disabled = true;
 
   showWord();
-  intervalId = setInterval(showWord, getDelay());
 }
 
 function pause() {
-  clearInterval(intervalId);
+  clearTimeout(intervalId);
   intervalId = null;
   running = false;
   btnStart.textContent = 'Resume';
@@ -75,7 +81,7 @@ function pause() {
 }
 
 function stop() {
-  clearInterval(intervalId);
+  clearTimeout(intervalId);
   intervalId = null;
   running = false;
   words = [];
