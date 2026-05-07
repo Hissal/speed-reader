@@ -1,0 +1,28 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validate HTML
+        run: npx --yes htmlhint index.html
+
+      - name: Validate CSS
+        run: npx --yes stylelint style.css --config '{"rules":{"block-no-empty":true}}'
+
+      - name: Check JS syntax
+        run: node --check script.js

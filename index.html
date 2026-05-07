@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SpeedReader</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>SpeedReader</h1>
+    </header>
+
+    <section id="input-section">
+      <textarea id="text-input" placeholder="Paste your text here..."></textarea>
+      <div id="controls">
+        <label for="wpm-input">WPM:
+          <input type="number" id="wpm-input" value="300" min="50" max="1000" step="10" />
+        </label>
+        <button id="btn-start">Start</button>
+        <button id="btn-pause" disabled>Pause</button>
+        <button id="btn-stop" disabled>Stop</button>
+      </div>
+    </section>
+
+    <section id="reader-section">
+      <div id="word-display">
+        <span id="word"></span>
+      </div>
+      <div id="progress">
+        <span id="progress-text">0 / 0</span>
+      </div>
+    </section>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
