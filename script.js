@@ -227,3 +227,20 @@ function applyGuideOffset(v) {
 rangeGuideWidth.addEventListener('input', (e) => applyGuideWidth(e.target.value));
 rangeGuideLength.addEventListener('input', (e) => applyGuideLength(e.target.value));
 rangeGuideOffset.addEventListener('input', (e) => applyGuideOffset(e.target.value));
+
+const rangePauseComma = document.getElementById('range-pause-comma');
+const rangePausePeriod = document.getElementById('range-pause-period');
+const outPauseComma = document.getElementById('out-pause-comma');
+const outPausePeriod = document.getElementById('out-pause-period');
+
+function applyPauseComma(v) {
+  commaMultiplier = parseFloat(v);
+  outPauseComma.textContent = commaMultiplier.toFixed(1);
+}
+function applyPausePeriod(v) {
+  periodMultiplier = parseFloat(v);
+  outPausePeriod.textContent = periodMultiplier.toFixed(1);
+}
+
+rangePauseComma.addEventListener('input', (e) => applyPauseComma(e.target.value));
+rangePausePeriod.addEventListener('input', (e) => applyPausePeriod(e.target.value));
