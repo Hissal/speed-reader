@@ -17,6 +17,7 @@
   --guide-width: 1px;
   --guide-length: 30px;
   --guide-offset: 25%;
+  --word-size: 3rem;
 }
 
 body.theme-amber {
@@ -182,7 +183,7 @@ button:disabled {
 
 #word {
   position: relative;
-  font-size: 3rem;
+  font-size: var(--word-size);
   font-weight: 400;
   letter-spacing: 0.02em;
   user-select: none;
@@ -345,7 +346,7 @@ body.reader-mode #word-display::after {
 }
 
 body.reader-mode #word {
-  font-size: 4rem;
+  font-size: calc(var(--word-size) * 1.33);
 }
 
 body.reader-mode #progress {

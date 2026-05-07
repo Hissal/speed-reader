@@ -244,3 +244,13 @@ function applyPausePeriod(v) {
 
 rangePauseComma.addEventListener('input', (e) => applyPauseComma(e.target.value));
 rangePausePeriod.addEventListener('input', (e) => applyPausePeriod(e.target.value));
+
+const rangeWordSize = document.getElementById('range-word-size');
+const outWordSize = document.getElementById('out-word-size');
+
+function applyWordSize(v) {
+  document.documentElement.style.setProperty('--word-size', `${v}rem`);
+  outWordSize.textContent = parseFloat(v).toFixed(1);
+}
+
+rangeWordSize.addEventListener('input', (e) => applyWordSize(e.target.value));
