@@ -14,6 +14,9 @@
   --orp: #e74c5e;
   --guide: rgba(231, 76, 94, 0.35);
   --font-reader: Georgia, 'Times New Roman', serif;
+  --guide-width: 1px;
+  --guide-length: 30px;
+  --guide-offset: 25%;
 }
 
 body.theme-amber {
@@ -161,14 +164,21 @@ button:disabled {
   content: '';
   position: absolute;
   left: 50%;
-  width: 1px;
-  height: 30px;
+  width: var(--guide-width);
+  height: var(--guide-length);
   background: var(--guide);
   pointer-events: none;
 }
 
-#word-display::before { top: 25%; transform: translate(-50%, -100%); }
-#word-display::after  { bottom: 25%; transform: translate(-50%, 100%); }
+#word-display::before {
+  top: var(--guide-offset);
+  transform: translate(-50%, -100%);
+}
+
+#word-display::after {
+  bottom: var(--guide-offset);
+  transform: translate(-50%, 100%);
+}
 
 #word {
   position: relative;
@@ -321,7 +331,7 @@ body.reader-mode #word-display {
 
 body.reader-mode #word-display::before,
 body.reader-mode #word-display::after {
-  height: 60px;
+  height: calc(var(--guide-length) * 2);
 }
 
 body.reader-mode #word {
