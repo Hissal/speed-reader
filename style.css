@@ -179,3 +179,16 @@ button:disabled {
   font-size: 0.8rem;
   color: var(--text-faint);
 }
+
+#word {
+  display: inline-flex;
+  white-space: pre;
+}
+
+.word-orp {
+  color: var(--orp);
+}
+
+.word-before, .word-after {
+  color: var(--text);
+}
