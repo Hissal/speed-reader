@@ -48,7 +48,7 @@ function showWord() {
     return;
   }
   renderWord(words[index]);
-  progressEl.textContent = `${index + 1} / ${words.length}`;
+  progressEl.textContent = `${wpmInput.value} wpm`;
   index++;
   intervalId = setTimeout(showWord, getDelay());
 }
@@ -56,6 +56,8 @@ function showWord() {
 function start() {
   const raw = textInput.value.trim();
   if (!raw) return;
+
+  btnReaderPause.textContent = 'Pause';
 
   if (!running) {
     words = raw.split(/\s+/);
@@ -69,6 +71,7 @@ function start() {
   textInput.disabled = true;
 
   showWord();
+  enterReaderMode();
 }
 
 function pause() {
@@ -76,6 +79,7 @@ function pause() {
   intervalId = null;
   running = false;
   btnStart.textContent = 'Resume';
+  btnReaderPause.textContent = 'Resume';
   btnStart.disabled = false;
   btnPause.disabled = true;
 }
@@ -160,3 +164,32 @@ selectTheme.addEventListener('change', saveSettings);
 selectFont.addEventListener('change', saveSettings);
 
 loadSettings();
+
+const btnReaderPause = document.getElementById('btn-reader-pause');
+const btnReaderExit = document.getElementById('btn-reader-exit');
+
+function enterReaderMode() {
+  document.body.classList.add('reader-mode');
+}
+
+function exitReaderMode() {
+  document.body.classList.remove('reader-mode');
+}
+
+btnReaderPause.addEventListener('click', pause);
+btnReaderExit.addEventListener('click', () => {
+  stop();
+  exitReaderMode();
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && document.body.classList.contains('reader-mode')) {
+    stop();
+    exitReaderMode();
+  }
+  if (e.key === ' ' && document.body.classList.contains('reader-mode')) {
+    e.preventDefault();
+    if (running) pause();
+    else start();
+  }
+});
