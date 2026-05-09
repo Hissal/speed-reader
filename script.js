@@ -130,7 +130,7 @@ function applyFont(font) {
   else if (font === 'mono') document.body.classList.add('font-mono');
 }
 
-btnSettings.addEventListener('click', openDrawer);
+btnSettings.addEventListener('click', () => drawer.classList.toggle('closed'));
 btnCloseSettings.addEventListener('click', closeDrawer);
 selectTheme.addEventListener('change', (e) => applyTheme(e.target.value));
 selectFont.addEventListener('change', (e) => applyFont(e.target.value));
